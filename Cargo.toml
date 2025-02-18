@@ -1,0 +1,10 @@
+[package]
+name = "rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }  # Async networking
+log = "0.4"     # (Optional) Logging
+tracing = "0.1" # (Optional) Structured logging
+clap = { version = "4.0", features = ["derive"] } # (Optional) Command-line args
