@@ -1,6 +1,7 @@
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
 use std::error::Error;
+use std::net::Ipv4Addr;
 
 struct TcpRequest  {
     version: u8,
@@ -30,8 +31,15 @@ impl TcpRequest {
         }
 
         let dest = match address_type {
-            1 => {
+            1 => {  // for Ipv4 address checking
                 let mut ipv4_buffer = [0;4];
+                socket.read_exact(&mut ipv4_buffer).await?;
+                Ipv4Addr::from(ipv4_buffer).to_string();
+            }
+            2 => {
+                let mut buffer_length = [0; 1];
+                socket.read_exact(&mut buffer_length).await?;
+                
             }
             _ => return Err("Unknown address type".into()),
         };
