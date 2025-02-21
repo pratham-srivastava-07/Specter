@@ -1,6 +1,7 @@
 use tokio::net::TcpListener;
 use std::error::Error;
 mod proxy;
+mod client;
 
 // setting up a listener for clients 
 #[tokio::main]
