@@ -1,11 +1,9 @@
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
 use std::error::Error;
-use crate::client::req::TcpRequest;
 
 pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> { // function returns a result type, ()-> ok() and Box<dyn Error>> returns a boxed dynamic error
     let mut buffer = [0; 1024]; // initializing an array of 1024 el with 0
-    let client = TcpRequest::request_client(&mut socket).await?;
 
     // handling proxy handshake 
     let n = socket.read(&mut buffer).await?;

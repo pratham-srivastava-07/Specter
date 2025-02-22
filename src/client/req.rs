@@ -21,7 +21,7 @@ impl TcpRequest {
 
         let version = buffer[0];
         let command = buffer[1];
-        let reserved = buffer[2];
+        // let reserved = buffer[2];
         let address_type = buffer[3];
 
         if version != 5 {
