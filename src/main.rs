@@ -7,7 +7,7 @@ mod client;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     let listener = TcpListener::bind("0.0.0.0:1080").await?;
-    println!("SOCKS5 Proxy listening on port 1080...");
+    println!("Proxy listening on port 1080...");
     loop {
         
         let (socket,  add) = listener.accept().await?;
