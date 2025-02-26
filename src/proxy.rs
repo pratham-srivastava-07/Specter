@@ -1,37 +1,28 @@
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
+
 use tokio::net::TcpStream;
 use std::error::Error;
+use crate::client::req::TcpRequest;
 
-pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> { // function returns a result type, ()-> ok() and Box<dyn Error>> returns a boxed dynamic error
-    let mut buffer = [0; 1024]; // initializing an array of 1024 el with 0
+pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> {
+    let request = TcpRequest::request_client(&mut socket).await?;
 
-    // handling proxy handshake 
-    let n = socket.read(&mut buffer).await?;
+    println!(
+        "Received request: Version {} | Command {} | Addr Type {} | Destination {}:{}",
+        request.version, request.command, request.address_type, request.dest, request.port
+    );
 
-    // check if there are atlesst 2 bytes received
-    if n < 2 {
-        println!("Invalid SOCKS5 handshake");
-        return Err("Handshake failed".into())
-    }
-    // version and nmethods checking
-    let version = buffer[0];
-    let nmethods = buffer[1];
+    //  trying to connect to the target server
+    let mut target_stream = TcpStream::connect(format!("{}:{}", request.dest, request.port)).await?;
+    println!("Connected to target server: {}:{}", request.dest, request.port);
 
-    if version != 5 {
-        println!("Version does not match, {}", version);
-        return Err("Unsupported SOCKS version".into());
-    }
+    // bi-directional data transfer between client and target
+    let (mut client_reader, mut client_writer) = socket.split();
+    let (mut server_reader, mut server_writer) = target_stream.split();
 
-    let methods = &buffer[2..( 2 + nmethods as usize)];
-    println!("Methods supported {:?}", methods);
-    // if it contains 0x00 proceed with writing, else dont
-    if  methods.contains(&0x00) {
-        socket.write_all(&[5, 0]).await?;
-        println!("No Authentication supported, sending response...");
-    } else {
-        println!("No acceptable authentication methods");
-        socket.write_all(&[5, 0xFF]).await?;
-        return Err("Authentication method not supported".into());
-    }
+    let client_to_server = tokio::io::copy(&mut client_reader, &mut server_writer);
+    let server_to_client = tokio::io::copy(&mut server_reader, &mut client_writer);
+
+    tokio::try_join!(client_to_server, server_to_client)?;
+
     Ok(())
 }

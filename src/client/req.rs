@@ -6,11 +6,11 @@ use std::net::Ipv6Addr;
 
 
 pub struct TcpRequest  {
-    version: u8,
-    command: u8,
-    address_type: u8,
-    dest: String,
-    port: u16,
+    pub version: u8,
+    pub command: u8,
+    pub address_type: u8,
+    pub dest: String,
+    pub port: u16,
 }
 
 impl TcpRequest {
@@ -23,6 +23,11 @@ impl TcpRequest {
         let command = buffer[1];
         // let reserved = buffer[2];
         let address_type = buffer[3];
+
+        println!(
+            "SOCKS5 Request: Version={} Command={} AddrType={}",
+            version, command, address_type
+        );
 
         if version != 5 {
             return Err("Invalid SOCKS5 version".into());
