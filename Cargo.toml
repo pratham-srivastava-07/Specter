@@ -3,6 +3,18 @@ name = "rust"
 version = "0.1.0"
 edition = "2021"
 
+# Default binary to run when `cargo run` is executed
+[package.metadata]
+default-run = "rust"
+
+[[bin]]
+name = "rust"   # Proxy server binary (matches src/main.rs)
+path = "src/main.rs"
+
+[[bin]]
+name = "client" # Client binary (matches src/bin/client.rs)
+path = "src/bin/client.rs"
+
 [dependencies]
 tokio = { version = "1", features = ["full"] }  # Async networking
 log = "0.4"     # (Optional) Logging
