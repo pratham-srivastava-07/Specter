@@ -1,7 +1,8 @@
-use tokio::io::{ AsyncReadExt, AsyncWriteExt};
+use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
+use tokio_native_tls::TlsConnector;
+use native_tls::TlsConnector as NativeTlsConnector;
 use std::error::Error;
-
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -11,16 +12,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     println!("Connecting to proxy at {}", proxy_addr);
     let mut connect_server = TcpStream::connect(proxy_addr).await?;
-     // sending a HTTP req
-    let connect_request = format!("CONNECT {}:{} HTTP/1.1\r\nHost: {}:{}\r\n\r\n",
-    target_host, target_port, target_host, target_port);
+
+    // Sending an HTTP CONNECT request to establish a tunnel
+    let connect_request = format!(
+        "CONNECT {}:{} HTTP/1.1\r\nHost: {}:{}\r\n\r\n",
+        target_host, target_port, target_host, target_port
+    );
 
     connect_server.write_all(connect_request.as_bytes()).await?;
 
-    // read response from proxy
-
+    // Read response from proxy
     let mut buffer = [0; 1024];
-
     let n = connect_server.read(&mut buffer).await?;
     let response = String::from_utf8_lossy(&buffer[..n]);
 
@@ -31,6 +33,22 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     println!("Connected to {} through proxy!", target_host);
 
-    Ok(())
+    // Upgrade to a TLS connection using `native-tls`
+    let native_tls_connector = NativeTlsConnector::new()?;
+    let connector = TlsConnector::from(native_tls_connector);
+    let mut tls_stream = connector.connect(target_host, connect_server).await?;
 
+    // Send the actual HTTP request
+    let http_request = format!(
+        "GET / HTTP/1.1\r\nHost: {}\r\nUser-Agent: Rust-Client\r\nConnection: close\r\n\r\n",
+        target_host
+    );
+    tls_stream.write_all(http_request.as_bytes()).await?;
+
+    // Read and print the response
+    let mut response = String::new();
+    tls_stream.read_to_string(&mut response).await?;
+    println!("Response:\n{}", response);
+
+    Ok(())
 }

@@ -2,7 +2,7 @@
 name = "rust"
 version = "0.1.0"
 edition = "2021"
-
+default-run = "rust"
 
 [package.metadata]
 default-run = "rust"
@@ -19,4 +19,6 @@ path = "src/bin/client.rs"
 tokio = { version = "1", features = ["full"] }  
 log = "0.4"    
 tracing = "0.1"
+tokio-native-tls = "0.3"
+native-tls = "0.2"
 clap = { version = "4.0", features = ["derive"] } 
