@@ -1,7 +1,7 @@
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::net::TcpStream;
 use std::error::Error;
-
+use log::info;
 pub struct TcpRequest {
     pub dest: String,
     pub port: u16,
@@ -14,7 +14,7 @@ impl TcpRequest {
 
         // Read the first line of the HTTP request
         reader.read_line(&mut request_line).await?;
-        println!("Received Request: {}", request_line);
+        info!("Received Request: {}", request_line);
 
         // Parse HTTP CONNECT request (e.g., "CONNECT example.com:443 HTTP/1.1")
         if !request_line.starts_with("CONNECT") {

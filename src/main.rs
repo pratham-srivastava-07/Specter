@@ -2,20 +2,22 @@ use tokio::net::TcpListener;
 use std::error::Error;
 mod proxy;
 mod client;
+use log::{info, error};
 
  
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    env_logger::init();
     let listener = TcpListener::bind("0.0.0.0:1080").await?;
-    println!("Proxy listening on port 1080...");
+    info!("Proxy listening on port 1080...");
     loop {
         
         let (socket,  add) = listener.accept().await?;
-        println!("new connection from client {}", add);
+        info!("new connection from client {}", add);
          
          tokio::spawn(async move {
             if let Err(e) = proxy::handle_client(socket).await {
-                println!("Error handling client: {}", e);
+                error!("Error handling client: {}", e);
             }
         });
     }
