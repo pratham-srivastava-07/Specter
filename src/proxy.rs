@@ -2,18 +2,27 @@ use tokio::net::TcpStream;
 use std::error::Error;
 // use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use crate::client::req::TcpRequest;
-use log::{info, warn};
-// use reqwest::Request;
+use log::{info, warn, error};
+use crate::auth;
 
 pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> {
     let request = TcpRequest::request_client(&mut socket).await?;
     let blocked_domains = ["github.com"];
+    let headers = TcpRequest::request_client(&mut socket).await?.headers;
 
     if blocked_domains.contains(&request.dest.as_str()) {
         warn!("Cannot forward request to {}", request.dest);
         return Ok(());
     }
 
+    let token = auth::extract_auth_token(&headers);
+
+    if let Some(token) = token {
+        info!("Authorization Token {}", token);
+    } else {
+        error!("No Authorization token found")
+    }
+    
     info!(
         "Forwarding request to {}:{}",
         request.dest, request.port

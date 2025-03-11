@@ -3,7 +3,7 @@ use std::error::Error;
 mod proxy;
 mod client;
 use log::{info, error};
-
+mod auth;
  
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

@@ -5,6 +5,7 @@ use log::info;
 pub struct TcpRequest {
     pub dest: String,
     pub port: u16,
+    pub headers: Vec<String>,
 }
 
 impl TcpRequest {
@@ -56,6 +57,6 @@ impl TcpRequest {
         let socket = reader.get_mut(); 
         socket.write_all(b"HTTP/1.1 200 Connection Established\r\n\r\n").await?;
 
-        Ok(TcpRequest { dest, port })
+        Ok(TcpRequest { dest, port, headers })
     }
 }
