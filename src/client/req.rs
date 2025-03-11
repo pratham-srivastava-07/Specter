@@ -35,6 +35,21 @@ impl TcpRequest {
         let dest = host_port[0].to_string();
         let port = host_port[1].parse::<u16>()?;
 
+        let mut headers: Vec<String> = Vec::new();
+
+        loop {
+            let mut line = String::new();
+            reader.read_line(&mut line).await?;
+
+            let new_line = line.trim();
+
+            if new_line.is_empty() {
+                break;
+            }
+
+            headers.push(new_line.to_string());
+        }
+
         // Send HTTP 200 Connection Established response
         // socket.write_all(b"HTTP/1.1 200 Connection Established\r\n\r\n").await?;
 
