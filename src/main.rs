@@ -4,9 +4,10 @@ mod proxy;
 mod client;
 use log::{info, error};
 mod auth;
- 
+use dotenv::dotenv;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    dotenv().ok();
     env_logger::init();
     let listener = TcpListener::bind("0.0.0.0:1080").await?;
     info!("Proxy listening on port 1080...");
