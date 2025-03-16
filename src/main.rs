@@ -4,6 +4,7 @@ mod proxy;
 mod client;
 use log::{info, error};
 mod auth;
+mod cache;
 use dotenv::dotenv;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
