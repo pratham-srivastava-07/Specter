@@ -1,5 +1,6 @@
+use crate::error::{ProxyError, ProxyResult};
 // use std::env;
-pub fn extract_auth_token(headers: &[String]) -> Option<String> {
+pub fn extract_auth_token(headers: &[String]) -> ProxyResult<String> {
     println!("headers: {:?}", headers);
     for header in headers {
         if header.starts_with("Authorization:") {
@@ -9,14 +10,15 @@ pub fn extract_auth_token(headers: &[String]) -> Option<String> {
                 let token = parts[2].to_string();
                 if Some(&token) == match_key().as_ref() {
                     println!("Valid Token: {}", token);
-                    return Some(token);
+                    return Ok(token);
                 } else {
                     println!("Token mismatch. Expected: {:?}, Got: {}", match_key(), token);
+                    return Err(ProxyError::Authentication("Invalid token".to_string()));
                 }
             }
         }
     }
-    None
+    Err(ProxyError::Authentication("No authorization header found".to_string()))
 }
 
 pub fn match_key() -> Option<String> {

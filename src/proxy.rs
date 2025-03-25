@@ -7,12 +7,17 @@ use crate::auth;
 use std::collections::HashSet;
 use crate::cache::Cache;
 use std::time::Duration;
+use crate::metrics::Metrics;
+
 
 lazy_static::lazy_static! {
     static ref CACHE: Cache = Cache::new(); // global cache
 }
 
 pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> {
+
+    Metrics::increment_request();
+
     let request = TcpRequest::request_client(&mut socket).await?;
     let blocked_domains: HashSet<&str> = vec!["github.com"].into_iter().collect();
     let key = format!("{}:{}", request.dest, request.port);
@@ -21,26 +26,30 @@ pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> 
     // Check for blocked domains
     if blocked_domains.contains(&request.dest.as_str()) {
         warn!("Cannot forward request to {}", request.dest);
+        Metrics::increment_error();
         return Ok(());
     }
 
     // Check for authentication token
     let token = auth::extract_auth_token(&request.headers);
-    if token.is_none() {
+    if !token.is_ok() {
         error!("No valid authorization token found");
+        Metrics::increment_error();
         return Err("Unauthorized request".into());
     }
 
-    if let Some(token) = token {
+    if let Ok(token) = token {
         info!("Authorization Token {}", token);
     } else {
         error!("No Authorization token found");
+        Metrics::increment_error();
         return Err("Could not forward request due to missing token".into());
     }
 
     // Check if response is cached before, if yes take from cache
     if let Some(cached_response) = CACHE.retrieve_data(&key, ttl).await {
         info!("Getting data from cache");
+        Metrics::increment_cache_hit();
         socket.write_all(&cached_response).await?;
         return Ok(());
     }
