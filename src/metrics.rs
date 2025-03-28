@@ -24,6 +24,7 @@ impl Metrics {
         CACHE_HITS.fetch_add(1, Ordering::SeqCst);
     }
 
+    
     // pub fn get_stats() -> (u64, u64, u64) {
     //     (
     //         TOTAL_REQUESTS.load(Ordering::SeqCst),
