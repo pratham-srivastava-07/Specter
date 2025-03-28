@@ -38,14 +38,6 @@ pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> 
         return Err("Unauthorized request".into());
     }
 
-    if let Ok(token) = token {
-        info!("Authorization Token {}", token);
-    } else {
-        error!("No Authorization token found");
-        Metrics::increment_error();
-        return Err("Could not forward request due to missing token".into());
-    }
-
     // Check if response is cached before, if yes take from cache
     if let Some(cached_response) = CACHE.retrieve_data(&key, ttl).await {
         info!("Getting data from cache");
@@ -60,8 +52,18 @@ pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> 
     );
 
     // Connect to the target server
-    let mut target_stream = TcpStream::connect(format!("{}:{}", request.dest, request.port)).await?;
-    info!("Connected to target server: {}:{}", request.dest, request.port);
+    let mut target_stream = match TcpStream::connect(format!("{}:{}", request.dest, request.port)).await {
+        Ok(stream) => {
+            info!("Connected to target server: {}:{}", request.dest, request.port);
+            stream
+        },
+        Err(e) => {
+            error!("❌ Failed to connect to {}:{} - {}", request.dest, request.port, e);
+            Metrics::increment_error();
+            return Err("Could not connect to target server".into());
+        }
+    };
+    
 
     if request.port == 443 {
         // For HTTPS, tunnel the raw data using copy_bidirectional
