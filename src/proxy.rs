@@ -65,9 +65,11 @@ pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> 
     modified_headers.retain(|header| !header.to_lowercase().starts_with("x-real-ip"));
     modified_headers.push("X-Forwarded-For: 127.0.0.1".to_string()); // Fake IP - you can use your server's IP here
     modified_headers.push("Via: Masked-Proxy".to_string());
-    modified_headers.push("X-Real-IP: 127.0.0.1".to_string()); // Another commonly checked header
+    // modified_headers.push("X-Real-IP: 127.0.0.1".to_string()); // Another commonly checked header
 
     info!("Forwarding request to {}:{} with masked IP", request.dest, request.port);
+    println!("Modified Headers: {:?}", modified_headers);
+
 
     if request.port == 443 {
         // HTTPS tunneling - we can't modify headers in encrypted traffic
