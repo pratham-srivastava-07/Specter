@@ -19,7 +19,6 @@ export default function Landing() {
 
     window.addEventListener('scroll', handleScroll);
     
-    // Set animation complete after initial load
     const timer = setTimeout(() => {
       setAnimationComplete(true);
     }, 2000);
@@ -94,7 +93,7 @@ export default function Landing() {
     { value: "256-bit", label: "Encryption" }
   ];
 
-  const pricingPlans:any = {
+  const pricingPlans: any = {
     enterprise: {
       title: "Enterprise",
       price: "$499",
@@ -152,8 +151,8 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-slate-900 to-slate-800 text-white overflow-y-hidden">
       {/* Navbar */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md py-2 shadow-xl' : 'bg-transparent py-4'}`}>
-        <div className="container mx-auto px-4">
+      <header className={`fixed  p-10 top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md py-2 shadow-xl' : 'bg-transparent py-4'}`}>
+        <div className="container mx-auto px-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <div className="relative">
@@ -184,24 +183,24 @@ export default function Landing() {
         </div>
       </header>
 
-      {/* Hero Section with animated background */}
-      <div className="relative overflow-hidden pt-24">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden p-15">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
           <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
           <div className="absolute -bottom-8 left-20 w-72 h-72 bg-emerald-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
         </div>
 
-        <div className="container relative z-10 mx-auto px-4 py-24">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
+        <div className="container relative z-10 mx-auto px-6 py-24">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
             <motion.div
               initial="hidden"
               animate="visible"
               variants={fadeIn}
               custom={0}
-              className="flex-1"
+              className="flex-1 space-y-8"
             >
-              <div className="inline-block mb-6">
+              <div className="inline-block">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -215,15 +214,16 @@ export default function Landing() {
                 </motion.div>
               </div>
                   
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-blue-500 to-emerald-400">
+              <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-blue-500 to-emerald-400">
                 SPECTER
               </h1>
-              <p className="text-xl md:text-2xl text-gray-300 max-w-3xl leading-relaxed mb-8">
+              
+              <p className="text-xl md:text-2xl text-gray-300 max-w-3xl leading-relaxed">
                 A next-generation proxy server built with Rust, delivering unparalleled speed and security
                 for your enterprise web requests.
               </p>
               
-              <div className="flex flex-wrap gap-4 mb-8">
+              <div className="flex flex-wrap gap-6">
                 <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 px-8 py-6 text-lg">
                   Get Started <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -254,7 +254,6 @@ export default function Landing() {
                 <div className="relative bg-gray-900 rounded-2xl p-2 shadow-xl">
                   <div className="bg-black rounded-xl p-4 h-80 flex items-center justify-center overflow-hidden">
                     <div className="relative w-full h-full">
-                      {/* Terminal animation effect */}
                       <div className="absolute top-0 left-0 w-full p-2 flex items-center space-x-1.5">
                         <div className="w-3 h-3 rounded-full bg-red-500"></div>
                         <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -295,14 +294,14 @@ export default function Landing() {
       </div>
 
       {/* Trusted By Section */}
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-6 py-16">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeIn}
           custom={0}
-          className="text-center mb-8"
+          className="text-center mb-12"
         >
           <p className="text-gray-400 uppercase tracking-wider font-medium text-sm">Trusted by industry leaders</p>
         </motion.div>
@@ -312,7 +311,7 @@ export default function Landing() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={staggeredContainer}
-          className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6"
+          className="flex flex-wrap justify-center items-center gap-x-16 gap-y-8"
         >
           {partners.map((partner, index) => (
             <motion.div key={index} variants={staggeredItem} className="text-gray-500 text-lg font-semibold">
@@ -323,8 +322,8 @@ export default function Landing() {
       </div>
 
       {/* Stats Section */}
-      <div id="stats" className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-24">
+      <div id="stats" className="container mx-auto px-6 py-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
@@ -335,7 +334,7 @@ export default function Landing() {
               custom={index * 0.1}
               className="text-center"
             >
-              <div className="mb-2">
+              <div className="mb-4">
                 <span className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">
                   {stat.value}
                 </span>
@@ -346,17 +345,17 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* Features Grid with 3D Card Effect */}
-      <div id="features" className="container mx-auto px-4 py-16">
+      {/* Features Section */}
+      <div id="features" className="container mx-auto px-6 py-20">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeIn}
           custom={0}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl font-bold mb-4">Powerful Features</h2>
+          <h2 className="text-4xl font-bold mb-6">Powerful Features</h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Built for performance, security, and reliability
           </p>
@@ -373,14 +372,14 @@ export default function Landing() {
               custom={index * 0.1}
               whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
             >
-              <Card className="p-6 h-full bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 hover:border-gray-500 transition-all group relative overflow-hidden">
+              <Card className="p-8 h-full bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 hover:border-gray-500 transition-all group relative overflow-hidden">
                 <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
                 
-                <div className="relative z-10">
-                  <div className="h-16 w-16 rounded-xl mb-6 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 shadow-lg">
+                <div className="relative z-10 space-y-4">
+                  <div className="h-16 w-16 rounded-xl flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-700 shadow-lg">
                     <feature.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <h3 className="text-xl font-semibold">{feature.title}</h3>
                   <p className="text-gray-400">{feature.description}</p>
                 </div>
               </Card>
@@ -390,7 +389,150 @@ export default function Landing() {
       </div>
 
       {/* How It Works Section */}
-      <div id="how-it-works" className="container mx-auto px-4 py-16 my-12 bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl md:mx-8">
+      <div id="how-it-works" className="container mx-auto p-20 sm:px-6 py-16 md:py-24 my-12 md:my-20 bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl">
+  <motion.div
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true }}
+    variants={fadeIn}
+    custom={0}
+    className="text-center mb-12 md:mb-20"
+  >
+    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">How Specter Works</h2>
+    <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto px-4">
+      Advanced architecture built for enterprise requirements
+    </p>
+  </motion.div>
+
+  <div className="relative">
+    <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 via-blue-600 to-emerald-600 transform -translate-y-1/2 opacity-20 hidden lg:block"></div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16 px-4 sm:px-0">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        custom={0.1}
+        className="text-center flex flex-col items-center relative"
+      >
+        <div className="mb-6 bg-blue-500/10 p-5 rounded-full relative z-10">
+          <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full opacity-30 blur-sm"></div>
+          <div className="relative">
+            <Server className="w-8 h-8 sm:w-10 sm:h-10 text-blue-400" />
+          </div>
+        </div>
+        <h3 className="text-xl md:text-2xl font-semibold mb-3">Request Processing</h3>
+        <p className="text-gray-400 mb-6 max-w-xs mx-auto">Your requests are processed through our high-performance infrastructure</p>
+        
+        <div className="bg-gray-900/50 rounded-xl p-5 w-full border border-gray-800">
+          <div className="text-sm md:text-base text-left text-gray-400 space-y-3">
+            <p className="text-blue-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>Multi-threaded architecture</span>
+            </p>
+            <p className="text-blue-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>Asynchronous I/O operations</span>
+            </p>
+            <p className="text-blue-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>Optimized memory management</span>
+            </p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        custom={0.2}
+        className="text-center flex flex-col items-center relative"
+      >
+        <div className="mb-6 bg-purple-500/10 p-5 rounded-full relative z-10">
+          <div className="absolute -inset-2 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full opacity-30 blur-sm"></div>
+          <div className="relative">
+            <Shield className="w-8 h-8 sm:w-10 sm:h-10 text-purple-400" />
+          </div>
+        </div>
+        <h3 className="text-xl md:text-2xl font-semibold mb-3">End-to-End Encryption</h3>
+        <p className="text-gray-400 mb-6 max-w-xs mx-auto">Advanced encryption secures data in transit and at rest</p>
+        
+        <div className="bg-gray-900/50 rounded-xl p-5 w-full border border-gray-800">
+          <div className="text-sm md:text-base text-left text-gray-400 space-y-3">
+            <p className="text-purple-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>AES-256-GCM encryption</span>
+            </p>
+            <p className="text-purple-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>TLS 1.3 protocol support</span>
+            </p>
+            <p className="text-purple-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>Perfect forward secrecy</span>
+            </p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        custom={0.3}
+        className="text-center flex flex-col items-center relative"
+      >
+        <div className="mb-6 bg-emerald-500/10 p-5 rounded-full relative z-10">
+          <div className="absolute -inset-2 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full opacity-30 blur-sm"></div>
+          <div className="relative">
+            <Globe className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-400" />
+          </div>
+        </div>
+        <h3 className="text-xl md:text-2xl font-semibold mb-3">Global Delivery</h3>
+        <p className="text-gray-400 mb-6 max-w-xs mx-auto">Content delivered through our worldwide edge network</p>
+        
+        <div className="bg-gray-900/50 rounded-xl p-5 w-full border border-gray-800">
+          <div className="text-sm md:text-base text-left text-gray-400 space-y-3">
+            <p className="text-emerald-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>150+ global edge locations</span>
+            </p>
+            <p className="text-emerald-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>Intelligent routing algorithms</span>
+            </p>
+            <p className="text-emerald-400 flex items-start">
+              <span className="mr-2">•</span>
+              <span>Anycast network architecture</span>
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  </div>
+
+  <motion.div
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true }}
+    variants={fadeIn}
+    custom={0.4}
+    className="flex justify-center mt-16 md:mt-20"
+  >
+    <Link href="/proxy-tester">
+      <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+        Experience Specter <Sparkles className="ml-2 h-5 w-5" />
+      </Button>
+    </Link>
+  </motion.div>
+</div>
+
+      {/* Pricing Section */}
+      <div id="pricing" className="container mx-auto px-6 py-20">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -399,129 +541,12 @@ export default function Landing() {
           custom={0}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold mb-4">How Specter Works</h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Advanced architecture built for enterprise requirements
-          </p>
-        </motion.div>
-
-        <div className="relative">
-          {/* Connection line */}
-          <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 via-blue-600 to-emerald-600 transform -translate-y-1/2 opacity-30 hidden md:block"></div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              custom={0.1}
-              className="text-center flex flex-col items-center relative"
-            >
-              <div className="mb-6 bg-blue-500/10 p-4 rounded-full relative z-10">
-                <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full opacity-30 blur-sm"></div>
-                <div className="relative">
-                  <Server className="w-10 h-10 text-blue-400" />
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Request Processing</h3>
-              <p className="text-gray-400">Your requests are processed through our high-performance Rust servers</p>
-              
-              <div className="bg-gray-900 rounded-lg p-4 mt-6">
-                <div className="text-sm text-left text-gray-400">
-                  <p className="text-blue-400 mb-1">• Multi-threaded architecture</p>
-                  <p className="text-blue-400 mb-1">• Asynchronous I/O operations</p>
-                  <p className="text-blue-400">• Optimized memory management</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              custom={0.2}
-              className="text-center flex flex-col items-center relative"
-            >
-              <div className="mb-6 bg-purple-500/10 p-4 rounded-full relative z-10">
-                <div className="absolute -inset-2 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full opacity-30 blur-sm"></div>
-                <div className="relative">
-                  <Shield className="w-10 h-10 text-purple-400" />
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">End-to-End Encryption</h3>
-              <p className="text-gray-400">Advanced encryption secures data in transit and at rest</p>
-              
-              <div className="bg-gray-900 rounded-lg p-4 mt-6">
-                <div className="text-sm text-left text-gray-400">
-                  <p className="text-purple-400 mb-1">• AES-256-GCM encryption</p>
-                  <p className="text-purple-400 mb-1">• TLS 1.3 protocol support</p>
-                  <p className="text-purple-400">• Perfect forward secrecy</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              custom={0.3}
-              className="text-center flex flex-col items-center relative"
-            >
-              <div className="mb-6 bg-emerald-500/10 p-4 rounded-full relative z-10">
-                <div className="absolute -inset-2 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full opacity-30 blur-sm"></div>
-                <div className="relative">
-                  <Globe className="w-10 h-10 text-emerald-400" />
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Global Delivery</h3>
-              <p className="text-gray-400">Content delivered through our worldwide edge network</p>
-              
-              <div className="bg-gray-900 rounded-lg p-4 mt-6">
-                <div className="text-sm text-left text-gray-400">
-                  <p className="text-emerald-400 mb-1">• 150+ global edge locations</p>
-                  <p className="text-emerald-400 mb-1">• Intelligent routing algorithms</p>
-                  <p className="text-emerald-400">• Anycast network architecture</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-          custom={0.4}
-          className="flex justify-center mt-10"
-        >
-          <Link href="/proxy-tester">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-6">
-              Experience Specter <Sparkles className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
-        </motion.div>
-      </div>
-
-      {/* Pricing Section */}
-      <div id="pricing" className="container mx-auto px-4 py-16">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-          custom={0}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
+          <h2 className="text-4xl font-bold mb-6">Simple, Transparent Pricing</h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Choose the plan that best fits your needs
           </p>
           
-          <div className="justify-center mt-8 mb-12 p-1 bg-gray-800 rounded-full inline-flex">
+          <div className="justify-center mt-10 mb-16 p-1 bg-gray-800 rounded-full inline-flex">
             {Object.keys(pricingPlans).map((plan) => (
               <button
                 key={plan}
@@ -538,7 +563,7 @@ export default function Landing() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
           <AnimatePresence mode="wait">
             {Object.keys(pricingPlans).map((plan) => (
               activeTab === plan && (
@@ -553,24 +578,24 @@ export default function Landing() {
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-1">
-                    <Card className="h-full p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 relative overflow-hidden">
+                      <Card className="h-full p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 relative overflow-hidden">
                         <div className={`absolute -inset-1 bg-gradient-to-r ${plan === 'enterprise' ? 'from-purple-600 to-blue-600' : plan === 'business' ? 'from-blue-600 to-emerald-600' : 'from-emerald-600 to-amber-600'} rounded-lg opacity-10 blur`}></div>
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-6">
+                        <div className="relative z-10 space-y-6">
+                          <div className="flex items-center justify-between">
                             <h3 className="text-2xl font-bold">{pricingPlans[plan].title}</h3>
                             <div className="flex items-end">
                               <span className="text-4xl font-bold">{pricingPlans[plan].price}</span>
                               <span className="text-gray-400 ml-1">{pricingPlans[plan].period}</span>
                             </div>
                           </div>
-                          <p className="text-gray-300 mb-8">{pricingPlans[plan].description}</p>
+                          <p className="text-gray-300">{pricingPlans[plan].description}</p>
                           
-                          <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-6 mb-8">
+                          <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-6">
                             Get Started <ArrowRight className="ml-2 h-5 w-5" />
                           </Button>
                           
-                          <div className="border-t border-gray-700 pt-6">
-                            <h4 className="text-lg font-semibold mb-4">Includes:</h4>
+                          <div className="border-t border-gray-700 pt-6 space-y-4">
+                            <h4 className="text-lg font-semibold">Includes:</h4>
                             <ul className="space-y-3">
                               {pricingPlans[plan].features.map((feature: any, index: any) => (
                                 <li key={index} className="flex items-start">
@@ -586,7 +611,7 @@ export default function Landing() {
                     
                     <div className="lg:col-span-2">
                       <Card className="h-full p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700">
-                        <h3 className="text-2xl font-bold mb-6">Compare Plans</h3>
+                        <h3 className="text-2xl font-bold mb-8">Compare Plans</h3>
                         <div className="overflow-x-auto">
                           <table className="w-full">
                             <thead>
@@ -635,9 +660,9 @@ export default function Landing() {
           viewport={{ once: true }}
           variants={fadeIn}
           custom={0}
-          className="text-center"
+          className="text-center space-y-4"
         >
-          <p className="text-gray-400 mb-4">Need something custom?</p>
+          <p className="text-gray-400">Need something custom?</p>
           <Button variant="outline" className="border-purple-400 text-purple-400 hover:bg-purple-400/10 px-8 py-6">
             Contact Sales <Users className="ml-2 h-5 w-5" />
           </Button>
@@ -645,16 +670,16 @@ export default function Landing() {
       </div>
 
       {/* Testimonials Section */}
-      <div id="testimonials" className="container mx-auto px-4 py-16">
+      <div id="testimonials" className="container mx-auto px-6 py-20">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeIn}
           custom={0}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl font-bold mb-4">Trusted by Developers</h2>
+          <h2 className="text-4xl font-bold mb-6">Trusted by Developers</h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             What our customers say about Specter
           </p>
@@ -670,8 +695,8 @@ export default function Landing() {
               variants={fadeIn}
               custom={index * 0.1}
             >
-              <Card className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 h-full">
-                <div className="flex items-start mb-6">
+              <Card className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 h-full space-y-6">
+                <div className="flex items-start">
                   <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-full w-12 h-12 flex items-center justify-center text-white font-bold mr-4">
                     {testimonial.avatar}
                   </div>
@@ -681,7 +706,7 @@ export default function Landing() {
                   </div>
                 </div>
                 <p className="text-gray-300 italic">"{testimonial.content}"</p>
-                <div className="flex mt-4 space-x-1">
+                <div className="flex space-x-1">
                   {[...Array(5)].map((_, i) => (
                     <Award key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400/20" />
                   ))}
@@ -694,15 +719,16 @@ export default function Landing() {
 
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-purple-900/50 via-blue-900/50 to-emerald-900/50 rounded-3xl overflow-hidden my-16">
-        <div className="container mx-auto px-4 py-20 text-center">
+        <div className="container mx-auto px-6 py-24 text-center">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
             custom={0}
+            className="space-y-8"
           >
-            <div className="inline-block mb-6">
+            <div className="inline-block">
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-500 rounded-full opacity-75 blur"></div>
                 <div className="relative bg-black p-4 rounded-full">
@@ -711,12 +737,12 @@ export default function Landing() {
               </div>
             </div>
             
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to experience Specter?</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+            <h2 className="text-3xl md:text-5xl font-bold">Ready to experience Specter?</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Join thousands of developers and enterprises who trust Specter for their proxy infrastructure needs.
             </p>
             
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-6">
               <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-6">
                 Get Started <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
