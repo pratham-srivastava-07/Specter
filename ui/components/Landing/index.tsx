@@ -149,9 +149,9 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-slate-900 to-slate-800 text-white overflow-y-hidden">
+    <div className="min-h-screen p-10 bg-gradient-to-b from-black via-slate-900 to-slate-800 text-white overflow-y-hidden">
       {/* Navbar */}
-      <header className={`fixed  p-10 top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md py-2 shadow-xl' : 'bg-transparent py-4'}`}>
+      <header className={`fixed  p-20 top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md py-2 shadow-xl' : 'bg-transparent py-4'}`}>
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
@@ -265,7 +265,7 @@ export default function Landing() {
                           {animationComplete && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                               <p className="mb-2">$ specter --status</p>
-                              <p className="mb-1 text-blue-400">Specter Proxy Server v2.8.3</p>
+                              <p className="mb-1 text-blue-400">Specter Proxy Server v1.0.0</p>
                               <p className="mb-1">Status: <span className="text-green-400">ONLINE</span></p>
                               <p className="mb-1">Active Connections: <span className="text-yellow-400">1,254</span></p>
                               <p className="mb-1">Current Load: <span className="text-green-400">21%</span></p>

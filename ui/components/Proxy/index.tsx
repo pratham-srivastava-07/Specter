@@ -152,7 +152,7 @@ export default function ProxyTester() {
           
         </div>
         <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-blue-500 to-emerald-400">
-            Specter Proxy Tester
+            Specter
           </h1>
       </header>
 
