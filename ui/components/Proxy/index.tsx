@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 export default function ProxyTester() {
-  const [url, setUrl] = useState('https://example.com');
+  const [url, setUrl] = useState('');
   const [data, setData] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [method, setMethod] = useState('GET');

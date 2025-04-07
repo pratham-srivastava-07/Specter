@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
 
     // ---- HTTPS via CONNECT ---- //
     if (isHttps) {
-      return await new Promise((resolve) => {
+      return await new Promise<Response>((resolve) => {
         const proxySocket = net.connect(1080, "127.0.0.1", () => {
           const connectRequest = `CONNECT ${hostname}:${port} HTTP/1.1\r\n` +
             `Host: ${hostname}:${port}\r\n` +
@@ -131,7 +131,7 @@ export async function GET(req: NextRequest) {
     }
 
     // ---- HTTP Fallback (no CONNECT needed) ---- //
-    return await new Promise((resolve) => {
+    return await new Promise<Response>((resolve) => {
       const proxyRequest = http.request(
         {
           hostname: "127.0.0.1",
