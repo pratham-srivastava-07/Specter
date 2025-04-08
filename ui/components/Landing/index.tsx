@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Globe, Zap, Lock, ChevronRight, Code, Server, Cloud, ArrowRight, Sparkles, Check, Database, LineChart, Settings, Coffee, Users, Award } from 'lucide-react';
+import { Shield, Globe, Zap, Lock,  Server,  ArrowRight, Check, Database, LineChart, Settings, Users} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ import Testimonials from '../Testmonials';
 export default function Landing() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState('enterprise');
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [_, setAnimationComplete] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,45 +55,6 @@ export default function Landing() {
     }),
     exit: { opacity: 0, scale: 0.8, transition: { duration: 0.3 } }
   };
-
-  const staggeredContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const staggeredItem = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 }
-    }
-  };
-
-  const features = [
-    { icon: Shield, title: 'Enterprise Security', description: 'Military-grade encryption and security protocols for all requests', color: 'from-blue-500 to-blue-700' },
-    { icon: Globe, title: 'Global Infrastructure', description: 'Access content from anywhere with our distributed server network', color: 'from-emerald-500 to-teal-700' },
-    { icon: Zap, title: 'Blazing Fast', description: 'Rust-powered backend delivers unparalleled speed and performance', color: 'from-amber-500 to-orange-600' },
-    { icon: Lock, title: 'Complete Privacy', description: 'Zero-logging policy and encrypted channels protect your identity', color: 'from-purple-500 to-purple-700' },
-    { icon: Database, title: 'Intelligent Caching', description: 'Advanced caching technology reduces latency and bandwidth usage', color: 'from-pink-500 to-rose-700' },
-    { icon: LineChart, title: 'Detailed Analytics', description: 'Real-time insights into proxy performance and usage patterns', color: 'from-cyan-500 to-blue-600' },
-    { icon: Server, title: 'Load Balancing', description: 'Automatic distribution of traffic across multiple servers', color: 'from-indigo-500 to-violet-700' },
-    { icon: Settings, title: 'Customizable Rules', description: 'Create and manage custom routing rules for your traffic', color: 'from-green-500 to-emerald-700' },
-  ];
-
-  
-
-  const stats = [
-    { value: "99.99%", label: "Uptime" },
-    { value: "150+", label: "Server Locations" },
-    { value: "<50ms", label: "Average Latency" },
-    { value: "256-bit", label: "Encryption" }
-  ];
 
   const pricingPlans: any = {
     enterprise: {
@@ -146,10 +107,6 @@ export default function Landing() {
     }
   };
 
-  const partners = [
-    "Acme Corp", "TechGlobal", "Innovatech", "SecureNet", "DataFlow", "CloudForge"
-  ];
-
   return (
     <div className="min-h-screen p-10 bg-gradient-to-b from-black via-slate-900 to-slate-800 text-white overflow-y-hidden">
       {/* Navbar */}
@@ -176,10 +133,12 @@ export default function Landing() {
             </nav>
             
             <div className="flex items-center space-x-4">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors hidden md:inline">Login</a>
-              <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white">
-                Get Started
-              </Button>
+              {/* <a href="#" className="text-gray-300 hover:text-white transition-colors hidden md:inline">Login</a> */}
+             <Link href={"/web"}>
+                <Button size="sm" className="bg-gradient-to-r cursor-pointer from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white">
+                  Get Started
+                </Button>
+             </Link>
             </div>
           </div>
         </div>

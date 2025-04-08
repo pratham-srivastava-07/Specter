@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2, Send, Code, Copy, Check, RefreshCw, Globe, Server, Database, DownloadCloud, AlertCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -144,7 +144,7 @@ export default function ProxyTester() {
       <header className="container mx-auto px-4 py-8">
         <div className="flex items-center mb-16">
           <Link href="/">
-            <Button variant="ghost" className="text-gray-400 p-2 mr-4">
+            <Button variant="ghost" className="text-gray-400 cursor-pointer p-2 mr-4">
               <ArrowLeft className="h-5 w-5 mr-2" />
               Back to Home
             </Button>
@@ -169,7 +169,7 @@ export default function ProxyTester() {
               <h2 className="text-2xl font-bold mb-6 text-white">Request Configuration</h2>
               
               <div className="flex gap-4 mb-6">
-                <div className="w-1/4 text-white">
+                <div className="w-1/4 text-white cursor-pointer">
                   <Select value={method} onValueChange={setMethod}>
                     <SelectTrigger>
                       <SelectValue placeholder="Method" />
@@ -291,7 +291,7 @@ export default function ProxyTester() {
               <Button
                 onClick={fetchViaProxy}
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white mt-4"
+                className="w-full bg-gradient-to-r cursor-pointer from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white mt-4"
                 size="lg"
               >
                 {isLoading ? (
@@ -375,7 +375,7 @@ export default function ProxyTester() {
                     </div>
                   )}
                   
-                  <TabsList className="grid w-full grid-cols-2 bg-slate-800">
+                  <TabsList className="grid w-full grid-cols-2 bg-gray-800">
                     <TabsTrigger value="response">Response Body</TabsTrigger>
                     <TabsTrigger value="headers">Response Headers</TabsTrigger>
                   </TabsList>
@@ -461,8 +461,6 @@ export default function ProxyTester() {
                             <h3 className="text-lg font-medium ">Response Headers</h3>
                           </div>
                           
-                          {/* This would display actual headers from the response */}
-                          {/* Since we don't have actual header data, showing placeholders */}
                           <div className="text-gray-400">content-type</div>
                           <div>application/json</div>
                           <div className="text-gray-400">server</div>

@@ -10,7 +10,7 @@ import Link from 'next/link';
 export default function HeroSection() {
 
     const [animationComplete, setAnimationComplete] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [_, setIsScrolled] = useState(false);
 
     const fadeIn = {
         hidden: { opacity: 0, y: 20 },
@@ -78,11 +78,11 @@ export default function HeroSection() {
           </p>
           
           <div className="flex flex-wrap gap-6">
-            <Button size="lg" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 px-8 py-6 text-lg">
+            <Button size="lg" className="bg-gradient-to-r cursor-pointer from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 px-8 py-6 text-lg">
               Get Started <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Link href="/web">
-              <Button variant="outline" size="lg" className="border-purple-400 text-purple-400 hover:bg-purple-400/10 px-8 py-6 text-lg">
+              <Button variant="outline" size="lg" className="border-purple-400 text-purple-400 hover:bg-gray-200 cursor-pointer px-8 py-6 text-lg">
                 Try Demo <Code className="ml-2 h-5 w-5" />
               </Button>
             </Link>

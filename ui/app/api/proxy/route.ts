@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import http from "http";
-import https from "https";
 import net from "net";
 import tls from "tls";
 import { URL } from "url";
@@ -21,7 +20,7 @@ export async function GET(req: NextRequest) {
     try {
       targetUrl = new URL(url.startsWith("http") ? url : `https://${url}`);
     } catch (err) {
-      return new Response(JSON.stringify({ error: "Invalid URL provided" }), {
+      return new Response(JSON.stringify({ error: `Invalid URL provided ${err}` }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
