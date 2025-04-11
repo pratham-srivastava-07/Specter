@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SparklesCore } from "@/components/ui/sparkles";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

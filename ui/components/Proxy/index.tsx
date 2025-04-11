@@ -1,6 +1,6 @@
 "use client";
 
-import { useState} from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2, Send, Code, Copy, Check, RefreshCw, Globe, Server, Database, DownloadCloud, AlertCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { SparklesCore } from "../ui/sparkles";
 
 export default function ProxyTester() {
   const [url, setUrl] = useState('');
@@ -22,7 +23,7 @@ export default function ProxyTester() {
   const [body, setBody] = useState('');
   const [responseTime, setResponseTime] = useState<any>(null);
   const [responseSize, setResponseSize] = useState<any>(null);
-  const [responseStatus, setResponseStatus] = useState<any>(null);
+  const [responseStatus, setResponseStatus] = useState(null);
   const [copied, setCopied] = useState(false);
   const [lastRequests, setLastRequests] = useState<any>([]);
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -35,7 +36,7 @@ export default function ProxyTester() {
     setResponseStatus(null);
     setResponseTime(null);
     setResponseSize(null);
-    const startTime: any = Date.now();
+    const startTime = Date.now();
     
     try {
       // Filter out empty headers
@@ -55,9 +56,9 @@ export default function ProxyTester() {
         requestOptions.body = body;
       }
       
-      const res = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`, requestOptions);
-      const text = await res.text();
-      const endTime: any = Date.now();
+      const res: any = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`, requestOptions);
+      const text: any = await res.text();
+      const endTime = Date.now();
       
       setData(text);
       setResponseStatus(res.status);
@@ -72,7 +73,7 @@ export default function ProxyTester() {
         status: res.status
       };
       
-      setLastRequests((prev: any)=> [newRequest, ...prev.slice(0, 4)]);
+      setLastRequests([newRequest, ...lastRequests.slice(0, 4)]);
     } catch (e: any) {
       console.error('Failed to fetch via proxy:', e);
       setData('Error fetching: ' + e.message);
@@ -92,7 +93,7 @@ export default function ProxyTester() {
   };
 
   const removeHeader = (index: any) => {
-    const newHeaders = [...headers];
+    const newHeaders: any = [...headers];
     newHeaders.splice(index, 1);
     setHeaders(newHeaders);
   };
@@ -139,25 +140,48 @@ export default function ProxyTester() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-slate-900 to-slate-800 text-white pb-16">
+    <div className="min-h-screen bg-black text-white pb-16 relative overflow-hidden">
+      {/* Sparkles Background */}
+      <div className="w-full absolute inset-0 h-screen">
+        <SparklesCore
+          id="tsparticlescolorful"
+          background="transparent"
+          minSize={0.6}
+          maxSize={1.4}
+          particleDensity={50}
+          className="w-full h-full"
+          particleColor="#00ff00"
+          speed={0.5}
+        />
+      </div>
+      
       {/* Header with back button */}
-      <header className="container mx-auto px-4 py-8">
-        <div className="flex items-center mb-16">
-          <Link href="/">
-            <Button variant="ghost" className="text-gray-400 cursor-pointer p-2 mr-4">
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-          
-        </div>
-        <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-blue-500 to-emerald-400">
-            Specter
-          </h1>
-      </header>
+     {/* Header with centered content */}
+<header className="container mx-auto px-4 py-16 relative z-10 flex flex-col items-center justify-center text-center">
+  <motion.p 
+    className="text-green-400 mt-4 text-lg md:text-xl max-w-2xl"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5, delay: 0.2 }}
+  >
+    Slice through the digital veil with precision. Your gateway to seamless API testing and network intelligence.
+  </motion.p>
+  
+  <motion.div
+    className="mt-6 flex justify-center"
+    initial={{ opacity: 0, scale: 0.9 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5, delay: 0.4 }}
+  >
+    <div className="px-4 py-2 rounded-full border border-green-500/30 bg-black/50 text-sm text-gray-400 flex items-center">
+      <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+      Proxy Network Online
+    </div>
+  </motion.div>
+</header>
 
       <motion.div 
-        className="container mx-auto px-4"
+        className="container mx-auto px-4 relative z-10"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -165,16 +189,16 @@ export default function ProxyTester() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Request Configuration Panel */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
-            <Card className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 h-full">
+            <Card className="p-6 bg-black border border-green-500/30 backdrop-blur-sm h-full">
               <h2 className="text-2xl font-bold mb-6 text-white">Request Configuration</h2>
               
               <div className="flex gap-4 mb-6">
                 <div className="w-1/4 text-white cursor-pointer">
                   <Select value={method} onValueChange={setMethod}>
-                    <SelectTrigger>
+                    <SelectTrigger className="border-green-500/30 bg-black">
                       <SelectValue placeholder="Method" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-black border-green-500/30">
                       <SelectItem value="GET">GET</SelectItem>
                       <SelectItem value="POST">POST</SelectItem>
                       <SelectItem value="PUT">PUT</SelectItem>
@@ -189,7 +213,7 @@ export default function ProxyTester() {
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="https://example.com"
-                    className="w-full bg-slate-800 border-gray-700 text-white"
+                    className="w-full bg-black border-green-500/30 text-white"
                   />
                 </div>
               </div>
@@ -200,19 +224,19 @@ export default function ProxyTester() {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Globe className="h-4 w-4 text-gray-400" />
+                        <Globe className="h-4 w-4 text-green-400" />
                       </TooltipTrigger>
-                      <TooltipContent>
+                      <TooltipContent className="bg-black border-green-500/30">
                         <p>Choose the server location for your proxy request</p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 </div>
                 <Select value={proxyLocation} onValueChange={setProxyLocation}>
-                  <SelectTrigger className="w-full bg-slate-800 border-gray-700 text-white">
+                  <SelectTrigger className="w-full bg-black border-green-500/30 text-white">
                     <SelectValue placeholder="Select location" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-black border-green-500/30">
                     {locations.map((location) => (
                       <SelectItem key={location.value} value={location.value}>
                         {location.label}
@@ -230,8 +254,9 @@ export default function ProxyTester() {
                       id="advanced-mode" 
                       checked={showAdvanced}
                       onCheckedChange={setShowAdvanced}
+                      className="data-[state=checked]:bg-green-500"
                     />
-                    <Label htmlFor="advanced-mode text-white">Show</Label>
+                    <Label htmlFor="advanced-mode" className="text-white">Show</Label>
                   </div>
                 </div>
               </div>
@@ -246,19 +271,19 @@ export default function ProxyTester() {
                           value={header.key}
                           onChange={(e) => updateHeader(index, 'key', e.target.value)}
                           placeholder="Header name"
-                          className="w-1/2 bg-slate-800 border-gray-700 text-white"
+                          className="w-1/2 bg-black border-green-500/30 text-white"
                         />
                         <Input
                           value={header.value}
                           onChange={(e) => updateHeader(index, 'value', e.target.value)}
                           placeholder="Value"
-                          className="w-1/2 bg-slate-800 border-gray-700 text-white"
+                          className="w-1/2 bg-black border-green-500/30 text-white"
                         />
                         <Button 
                           variant="ghost" 
                           size="icon"
                           onClick={() => removeHeader(index)}
-                          className="text-gray-400 hover:text-white"
+                          className="text-gray-400 hover:text-green-400"
                         >
                           ✖
                         </Button>
@@ -268,7 +293,7 @@ export default function ProxyTester() {
                       variant="outline" 
                       size="sm" 
                       onClick={addHeader}
-                      className="mt-2 text-gray-400 border-gray-600"
+                      className="mt-2 text-green-400 hover:bg-green-500/10 border-green-500/30"
                     >
                       Add Header
                     </Button>
@@ -276,36 +301,38 @@ export default function ProxyTester() {
                   
                   {(method === 'POST' || method === 'PUT' || method === 'PATCH') && (
                     <div className="mb-6">
-                      <h3 className="text-lg font-medium mb-2">Request Body</h3>
+                      <h3 className="text-lg font-medium mb-2 text-white">Request Body</h3>
                       <textarea
                         value={body}
                         onChange={(e) => setBody(e.target.value)}
                         placeholder="Request payload (JSON)"
-                        className="w-full h-32 p-2 rounded-md bg-slate-800 border border-gray-700 text-white"
+                        className="w-full h-32 p-2 rounded-md bg-black border border-green-500/30 text-white"
                       />
                     </div>
                   )}
                 </>
               )}
               
-              <Button
-                onClick={fetchViaProxy}
-                disabled={isLoading}
-                className="w-full bg-gradient-to-r cursor-pointer from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white mt-4"
-                size="lg"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending Request...
-                  </>
-                ) : (
-                  <>
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Request
-                  </>
-                )}
-              </Button>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  onClick={fetchViaProxy}
+                  disabled={isLoading}
+                  className="w-full bg-green-500 hover:bg-green-600 text-black font-bold cursor-pointer mt-4"
+                  size="lg"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending Request...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-4 w-4" />
+                      Send Request
+                    </>
+                  )}
+                </Button>
+              </motion.div>
               
               {/* Recent Requests */}
               {lastRequests.length > 0 && (
@@ -313,13 +340,14 @@ export default function ProxyTester() {
                   <h3 className="text-lg font-medium mb-4 text-white">Recent Requests</h3>
                   <div className="space-y-2">
                     {lastRequests.map((req: any, index: any) => (
-                      <div 
+                      <motion.div 
                         key={index} 
-                        className="flex items-center justify-between p-2 rounded-md bg-slate-800/50 hover:bg-slate-700/50 cursor-pointer transition-colors"
+                        className="flex items-center justify-between p-2 rounded-md bg-black border border-green-500/20 hover:border-green-500/50 cursor-pointer transition-colors"
                         onClick={() => {
                           setUrl(req.url);
                           setMethod(req.method);
                         }}
+                        whileHover={{ x: 5 }}
                       >
                         <div className="flex items-center">
                           <span className={`inline-flex items-center justify-center w-16 px-2 py-1 mr-3 text-xs font-medium rounded ${
@@ -336,7 +364,7 @@ export default function ProxyTester() {
                         }`}>
                           {req.status}
                         </span>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
@@ -346,9 +374,9 @@ export default function ProxyTester() {
           
           {/* Response Panel */}
           <motion.div variants={itemVariants} className="lg:col-span-2">
-            <Card className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 h-full">
+            <Card className="bg-black border border-green-500/30 backdrop-blur-sm h-full relative">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <div className="p-6 border-b border-gray-700">
+                <div className="p-6 border-b border-green-500/30">
                   <h2 className="text-2xl font-bold mb-2 text-white">Response</h2>
                   {responseStatus && (
                     <div className="flex flex-wrap items-center gap-4 mb-4">
@@ -367,7 +395,7 @@ export default function ProxyTester() {
                       )}
                       
                       {responseSize && (
-                        <div className="flex items-center px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-sm">
+                        <div className="flex items-center px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm">
                           <Database className="h-3 w-3 mr-1" />
                           Size: {formatResponseSize(responseSize)}
                         </div>
@@ -375,9 +403,9 @@ export default function ProxyTester() {
                     </div>
                   )}
                   
-                  <TabsList className="grid w-full grid-cols-2 bg-gray-800">
-                    <TabsTrigger value="response">Response Body</TabsTrigger>
-                    <TabsTrigger value="headers">Response Headers</TabsTrigger>
+                  <TabsList className="grid w-full grid-cols-2 bg-black border border-green-500/30">
+                    <TabsTrigger value="response" className="data-[state=active]:bg-green-500 data-[state=active]:text-black">Response Body</TabsTrigger>
+                    <TabsTrigger value="headers" className="data-[state=active]:bg-green-500 data-[state=active]:text-black">Response Headers</TabsTrigger>
                   </TabsList>
                 </div>
                 
@@ -386,7 +414,7 @@ export default function ProxyTester() {
                     <div className="relative">
                       {data ? (
                         <>
-                          <div className="absolute top-2 right-2 flex space-x-2">
+                          <div className="absolute top-2 right-2 flex space-x-2 z-10">
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger asChild>
@@ -394,12 +422,12 @@ export default function ProxyTester() {
                                     variant="ghost"
                                     size="icon"
                                     onClick={handleCopy}
-                                    className="bg-slate-800/70 hover:bg-slate-700 text-gray-300"
+                                    className="bg-black/70 hover:bg-gray-900 text-green-400 border border-green-500/30"
                                   >
                                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                                   </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>
+                                <TooltipContent className="bg-black border-green-500/30">
                                   <p>Copy to clipboard</p>
                                 </TooltipContent>
                               </Tooltip>
@@ -419,32 +447,32 @@ export default function ProxyTester() {
                                         // Not valid JSON, ignore
                                       }
                                     }}
-                                    className="bg-slate-800/70 hover:bg-slate-700 text-gray-300"
+                                    className="bg-black/70 hover:bg-gray-900 text-green-400 border border-green-500/30"
                                   >
                                     <Code className="h-4 w-4" />
                                   </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>
+                                <TooltipContent className="bg-black border-green-500/30">
                                   <p>Format JSON</p>
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
                           </div>
                           
-                          <pre className="bg-slate-950 text-gray-300 p-6 rounded-b-lg overflow-x-auto min-h-[400px] max-h-[600px]">
+                          <pre className="bg-black text-green-400 p-6 rounded-b-lg overflow-x-auto min-h-[400px] max-h-[600px] border-t border-green-500/10">
                             {data}
                           </pre>
                         </>
                       ) : (
-                        <div className="bg-slate-950 text-gray-500 p-6 rounded-b-lg min-h-[400px] flex flex-col items-center justify-center">
+                        <div className="bg-black text-gray-500 p-6 rounded-b-lg min-h-[400px] flex flex-col items-center justify-center border-t border-green-500/10">
                           {isLoading ? (
                             <>
-                              <Loader2 className="h-10 w-10 animate-spin mb-4" />
+                              <Loader2 className="h-10 w-10 animate-spin mb-4 text-green-400" />
                               <p>Fetching data through proxy...</p>
                             </>
                           ) : (
                             <>
-                              <DownloadCloud className="h-10 w-10 mb-4" />
+                              <DownloadCloud className="h-10 w-10 mb-4 text-green-400" />
                               <p>Send a request to see the response</p>
                             </>
                           )}
@@ -454,32 +482,32 @@ export default function ProxyTester() {
                   </TabsContent>
                   
                   <TabsContent value="headers" className="m-0">
-                    <div className="bg-slate-950 text-gray-300 p-6 rounded-b-lg min-h-[400px] max-h-[600px] overflow-y-auto">
+                    <div className="bg-black text-gray-300 p-6 rounded-b-lg min-h-[400px] max-h-[600px] overflow-y-auto border-t border-green-500/10">
                       {responseStatus ? (
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="col-span-2 pb-2 mb-4 border-b border-gray-800">
-                            <h3 className="text-lg font-medium ">Response Headers</h3>
+                          <div className="col-span-2 pb-2 mb-4 border-b border-green-500/20">
+                            <h3 className="text-lg font-medium text-white">Response Headers</h3>
                           </div>
                           
-                          <div className="text-gray-400">content-type</div>
+                          <div className="text-green-400">content-type</div>
                           <div>application/json</div>
-                          <div className="text-gray-400">server</div>
+                          <div className="text-green-400">server</div>
                           <div>nginx</div>
-                          <div className="text-gray-400">x-proxy-origin</div>
+                          <div className="text-green-400">x-proxy-origin</div>
                           <div>{proxyLocation}</div>
-                          <div className="text-gray-400">date</div>
+                          <div className="text-green-400">date</div>
                           <div>{new Date().toUTCString()}</div>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center justify-center h-full text-gray-500">
                           {isLoading ? (
                             <>
-                              <Loader2 className="h-10 w-10 animate-spin mb-4" />
+                              <Loader2 className="h-10 w-10 animate-spin mb-4 text-green-400" />
                               <p>Fetching headers...</p>
                             </>
                           ) : (
                             <>
-                              <AlertCircle className="h-10 w-10 mb-4" />
+                              <AlertCircle className="h-10 w-10 mb-4 text-green-400" />
                               <p>No header information available</p>
                             </>
                           )}
@@ -498,9 +526,9 @@ export default function ProxyTester() {
           variants={itemVariants}
           className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          <Card className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700">
-            <div className="bg-purple-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Globe className="h-6 w-6 text-purple-400" />
+          <Card className="p-6 bg-black border border-green-500/30 backdrop-blur-sm">
+            <div className="bg-green-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+              <Globe className="h-6 w-6 text-green-400" />
             </div>
             <h3 className="text-xl font-bold mb-2 text-white">Global Proxy Network</h3>
             <p className="text-gray-300">
@@ -508,9 +536,9 @@ export default function ProxyTester() {
             </p>
           </Card>
           
-          <Card className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700">
-            <div className="bg-blue-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <RefreshCw className="h-6 w-6 text-blue-400" />
+          <Card className="p-6 bg-black border border-green-500/30 backdrop-blur-sm">
+            <div className="bg-green-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+              <RefreshCw className="h-6 w-6 text-green-400" />
             </div>
             <h3 className="text-xl font-bold mb-2 text-white">Request History</h3>
             <p className="text-gray-300">
@@ -518,9 +546,9 @@ export default function ProxyTester() {
             </p>
           </Card>
           
-          <Card className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700">
-            <div className="bg-emerald-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Code className="h-6 w-6 text-emerald-400" />
+          <Card className="p-6 bg-black border border-green-500/30 backdrop-blur-sm">
+            <div className="bg-green-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+              <Code className="h-6 w-6 text-green-400" />
             </div>
             <h3 className="text-xl font-bold mb-2 text-white">Advanced Request Options</h3>
             <p className="text-gray-300">
