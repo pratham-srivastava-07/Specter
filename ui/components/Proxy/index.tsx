@@ -6,13 +6,13 @@ import { ArrowLeft, Loader2, Send, Code, Copy, Check, RefreshCw, Globe, Server, 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { SparklesCore } from "../ui/sparkles";
+import Features from '../Features';
 
 export default function ProxyTester() {
   const [url, setUrl] = useState('');
@@ -236,7 +236,7 @@ export default function ProxyTester() {
                   <SelectTrigger className="w-full bg-black border-green-500/30 text-white">
                     <SelectValue placeholder="Select location" />
                   </SelectTrigger>
-                  <SelectContent className="bg-black border-green-500/30">
+                  <SelectContent className="bg-black text-white cursor-pointer border-green-500/30">
                     {locations.map((location) => (
                       <SelectItem key={location.value} value={location.value}>
                         {location.label}
@@ -404,8 +404,8 @@ export default function ProxyTester() {
                   )}
                   
                   <TabsList className="grid w-full grid-cols-2 bg-black border border-green-500/30">
-                    <TabsTrigger value="response" className="data-[state=active]:bg-green-500 data-[state=active]:text-black">Response Body</TabsTrigger>
-                    <TabsTrigger value="headers" className="data-[state=active]:bg-green-500 data-[state=active]:text-black">Response Headers</TabsTrigger>
+                    <TabsTrigger value="response" className="data-[state=active]:bg-green-500 cursor-pointer text-white data-[state=active]:text-black">Response Body</TabsTrigger>
+                    <TabsTrigger value="headers" className="data-[state=active]:bg-green-500 cursor-pointer text-white data-[state=active]:text-black">Response Headers</TabsTrigger>
                   </TabsList>
                 </div>
                 
@@ -522,40 +522,8 @@ export default function ProxyTester() {
         </div>
         
         {/* Feature Descriptions */}
-        <motion.div 
-          variants={itemVariants}
-          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          <Card className="p-6 bg-black border border-green-500/30 backdrop-blur-sm">
-            <div className="bg-green-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Globe className="h-6 w-6 text-green-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-2 text-white">Global Proxy Network</h3>
-            <p className="text-gray-300">
-              Access web resources from multiple geographic locations to test region-specific content and latency from various parts of the world.
-            </p>
-          </Card>
-          
-          <Card className="p-6 bg-black border border-green-500/30 backdrop-blur-sm">
-            <div className="bg-green-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <RefreshCw className="h-6 w-6 text-green-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-2 text-white">Request History</h3>
-            <p className="text-gray-300">
-              Keep track of your recent requests and easily reuse them. Compare response times and detect changes in API responses over time.
-            </p>
-          </Card>
-          
-          <Card className="p-6 bg-black border border-green-500/30 backdrop-blur-sm">
-            <div className="bg-green-500/10 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Code className="h-6 w-6 text-green-400" />
-            </div>
-            <h3 className="text-xl font-bold mb-2 text-white">Advanced Request Options</h3>
-            <p className="text-gray-300">
-              Customize headers, request body, and other parameters to thoroughly test API endpoints and web services with precision.
-            </p>
-          </Card>
-        </motion.div>
+        <Features />
+        
       </motion.div>
     </div>
   );
