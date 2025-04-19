@@ -168,7 +168,7 @@ export default function Contact() {
                   disabled={isSubmitting}
                 >
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-green-600 to-emerald-500 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-500"></div>
-                  <div className="relative w-full flex items-center justify-center gap-2 bg-black px-8 py-4 rounded-lg border border-green-500 text-green-400 hover:text-white transition duration-200">
+                  <div className="relative w-full flex items-center cursor-pointer justify-center gap-2 bg-black px-8 py-4 rounded-lg border border-green-500 text-green-400 hover:text-white transition duration-200">
                     {isSubmitting ? (
                       <>
                         <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

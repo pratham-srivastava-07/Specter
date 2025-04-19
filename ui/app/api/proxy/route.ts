@@ -30,11 +30,18 @@ export async function GET(req: NextRequest) {
     const port = targetUrl.port || (targetUrl.protocol === "https:" ? "443" : "80");
     const isHttps = targetUrl.protocol === "https:";
 
+    // Extract client IP or fallback
+    const clientIp =
+      req.headers.get("x-real-ip") ||
+      req.headers.get("x-forwarded-for") ||
+      "127.0.0.1";
+
     // ---- HTTPS via CONNECT ---- //
     if (isHttps) {
       return await new Promise<Response>((resolve) => {
         const proxySocket = net.connect(1080, "127.0.0.1", () => {
-          const connectRequest = `CONNECT ${hostname}:${port} HTTP/1.1\r\n` +
+          const connectRequest =
+            `CONNECT ${hostname}:${port} HTTP/1.1\r\n` +
             `Host: ${hostname}:${port}\r\n` +
             `User-Agent: curl/8.10.1\r\n` +
             `Proxy-Connection: Keep-Alive\r\n` +
@@ -83,18 +90,24 @@ export async function GET(req: NextRequest) {
             }
 
             // Tunnel is established. Proceed with TLS.
-            const tlsSocket = tls.connect({
-              socket: proxySocket,
-              servername: hostname,
-              rejectUnauthorized: false,
-            }, () => {
-              const request = `GET ${targetUrl.pathname}${targetUrl.search} HTTP/1.1\r\n` +
-                `Host: ${hostname}\r\n` +
-                `User-Agent: curl/8.10.1\r\n` +
-                `Connection: close\r\n\r\n`;
+            const tlsSocket = tls.connect(
+              {
+                socket: proxySocket,
+                servername: hostname,
+                rejectUnauthorized: false,
+              },
+              () => {
+                const request =
+                  `GET ${targetUrl.pathname}${targetUrl.search} HTTP/1.1\r\n` +
+                  `Host: ${hostname}\r\n` +
+                  `User-Agent: curl/8.10.1\r\n` +
+                  `Connection: close\r\n` +
+                  `X-Forwarded-For: ${clientIp}\r\n` +
+                  `X-Masked-IP: ${clientIp}\r\n\r\n`;
 
-              tlsSocket.write(request);
-            });
+                tlsSocket.write(request);
+              }
+            );
 
             const chunks: Buffer[] = [];
 
@@ -142,6 +155,8 @@ export async function GET(req: NextRequest) {
             "User-Agent": "curl/8.10.1",
             "Proxy-Connection": "Keep-Alive",
             Authorization: process.env.PROXY_SECRET_KEY || "Bearer secret",
+            "X-Forwarded-For": clientIp,
+            "X-Masked-IP": clientIp,
           },
           timeout: 10000,
         },

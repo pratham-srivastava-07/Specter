@@ -140,7 +140,7 @@ export default function ProxyTester() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white pb-16 relative overflow-hidden">
+    <div className="min-h-screen bg-black mt-10 text-white pb-16 relative overflow-hidden">
       {/* Sparkles Background */}
       <div className="w-full absolute inset-0 h-screen">
         <SparklesCore

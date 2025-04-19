@@ -104,6 +104,7 @@ pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> 
         // Handle the response
         let mut response_buffer = Vec::new();
         let mut temp_buffer = [0; 1024];
+        let mut headers_injected = false;
 
         loop {
             let n = target_stream.read(&mut temp_buffer).await?;
@@ -111,9 +112,34 @@ pub async fn handle_client(mut socket: TcpStream) -> Result<(), Box<dyn Error>> 
                 break;
             }
 
-            // Forward response to client
-            socket.write_all(&temp_buffer[..n]).await?;
-            response_buffer.extend_from_slice(&temp_buffer[..n]);
+            if !headers_injected {
+                if let Some(header_end) = temp_buffer.windows(4).position(|w| w == b"\r\n\r\n") {
+                    let headers_part = &temp_buffer[..header_end + 2]; 
+                    let body_part = &temp_buffer[header_end + 2..n];
+
+                    let mut modified_headers = String::from_utf8_lossy(headers_part).to_string();
+                    modified_headers.push_str("X-Masked-IP: 127.0.0.1\r\n");
+        
+                    // finalt line break for end of headers
+                    modified_headers.push_str("\r\n");
+        
+                    // Send modified headers and bodyu
+                    socket.write_all(modified_headers.as_bytes()).await?;
+                    socket.write_all(body_part).await?;
+        
+                    response_buffer.extend_from_slice(modified_headers.as_bytes());
+                    response_buffer.extend_from_slice(body_part);
+        
+                    headers_injected = true;
+                    continue;
+                }
+            } else {
+                // Forward response to client
+                socket.write_all(&temp_buffer[..n]).await?;
+                response_buffer.extend_from_slice(&temp_buffer[..n]);
+            }
+
+            
         }
 
         // Cache the response

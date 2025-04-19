@@ -108,7 +108,7 @@ export default function Navbar({ className = "" }) {
               </div>
             </MenuItem>
             
-            <Link href={"/contact"}>
+            {/* Changed from Link wrapping MenuItem to just MenuItem with an onClick handler */}
             <MenuItem 
               setActive={setActive} 
               active={active} 
@@ -147,7 +147,6 @@ export default function Navbar({ className = "" }) {
                 >LinkedIn</HoveredLink>
               </div>
             </MenuItem>
-            </Link>
             
             <Link href="/faq" className="relative group">
               <motion.div
