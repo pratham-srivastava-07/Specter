@@ -29,6 +29,8 @@ export default function ProxyTester() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [activeTab, setActiveTab] = useState("response");
   const [proxyLocation, setProxyLocation] = useState("auto");
+  const [xForwardedFor, setXForwardedFor] = useState(null);
+  const [maskedIp, setMaskedIp] = useState(null);
 
   const fetchViaProxy = async () => {
     setIsLoading(true);
@@ -57,6 +59,12 @@ export default function ProxyTester() {
       }
       
       const res: any = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`, requestOptions);
+      const xForwardedForIP = res.headers.get('X-Forwarded-For');
+      setXForwardedFor(xForwardedForIP)
+      console.log("hujswuxhuijx",xForwardedForIP);
+      const maskedIpAdd = res.headers.get('X-Masked-IP');
+      setMaskedIp(maskedIpAdd)
+      console.log("jhuishwuhui",maskedIpAdd);
       const text: any = await res.text();
       const endTime = Date.now();
       
@@ -400,7 +408,7 @@ export default function ProxyTester() {
                           Size: {formatResponseSize(responseSize)}
                         </div>
                       )}
-                    </div>
+                    </div>        
                   )}
                   
                   <TabsList className="grid w-full grid-cols-2 bg-black border border-green-500/30">
@@ -497,6 +505,10 @@ export default function ProxyTester() {
                           <div>{proxyLocation}</div>
                           <div className="text-green-400">date</div>
                           <div>{new Date().toUTCString()}</div>
+                          <div className="text-green-400">x-forwarded-for</div>
+                          <div>{xForwardedFor || 'Not available'}</div>
+                          <div className="text-green-400">x-masked-ip</div>
+                          <div>{maskedIp || 'Not available'}</div>
                         </div>
                       ) : (
                         <div className="flex flex-col items-center justify-center h-full text-gray-500">

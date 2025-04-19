@@ -36,6 +36,13 @@ export async function GET(req: NextRequest) {
       req.headers.get("x-forwarded-for") ||
       "127.0.0.1";
 
+
+      console.log('Setting headers:', {
+        'X-Proxy-Response': 'true',
+        'X-Forwarded-For': clientIp,
+        'X-Masked-IP': clientIp
+      });
+
     // ---- HTTPS via CONNECT ---- //
     if (isHttps) {
       return await new Promise<Response>((resolve) => {
@@ -126,6 +133,8 @@ export async function GET(req: NextRequest) {
                 }
               });
               headers.set("X-Proxy-Response", "true");
+              headers.set("X-Forwarded-For", clientIp);
+              headers.set("X-Masked-IP", clientIp);     
 
               const statusMatch = rawHeaders.match(/HTTP\/1\.[01] (\d+)/);
               const statusCode = statusMatch ? parseInt(statusMatch[1]) : 200;
@@ -178,6 +187,8 @@ export async function GET(req: NextRequest) {
             });
 
             responseHeaders.set("X-Proxy-Response", "true");
+            responseHeaders.set("X-Forwarded-For", clientIp);
+            responseHeaders.set("X-Masked-IP", clientIp);
 
             resolve(
               new Response(responseBody, {
