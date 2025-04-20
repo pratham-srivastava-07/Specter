@@ -172,7 +172,7 @@ export default function ProxyTester() {
     animate={{ opacity: 1 }}
     transition={{ duration: 0.5, delay: 0.2 }}
   >
-    Slice through the digital veil with precision. Your gateway to seamless API testing and network intelligence.
+    Slice through the digital veil with precision. Your gateway to seamless testing and network intelligence.
   </motion.p>
   
   <motion.div
@@ -203,16 +203,46 @@ export default function ProxyTester() {
               <div className="flex gap-4 mb-6">
                 <div className="w-1/4 text-white cursor-pointer">
                   <Select value={method} onValueChange={setMethod}>
-                    <SelectTrigger className="border-green-500/30 bg-black">
+                    <SelectTrigger className="border-green-500/30 cursor-pointer bg-black">
                       <SelectValue placeholder="Method" />
                     </SelectTrigger>
                     <SelectContent className="bg-black border-green-500/30">
-                      <SelectItem value="GET">GET</SelectItem>
-                      <SelectItem value="POST">POST</SelectItem>
-                      <SelectItem value="PUT">PUT</SelectItem>
-                      <SelectItem value="DELETE">DELETE</SelectItem>
-                      <SelectItem value="PATCH">PATCH</SelectItem>
-                      <SelectItem value="HEAD">HEAD</SelectItem>
+                      <SelectItem
+                        className="cursor-pointer text-white"
+                        value="GET"
+                      >
+                        GET
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer text-white"
+                        value="POST"
+                      >
+                        POST
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer text-white"
+                        value="PUT"
+                      >
+                        PUT
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer text-white"
+                        value="DELETE"
+                      >
+                        DELETE
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer text-white"
+                        value="PATCH"
+                      >
+                        PATCH
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer text-white"
+                        value="HEAD"
+                      >
+                        HEAD
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -234,7 +264,7 @@ export default function ProxyTester() {
                       <TooltipTrigger asChild>
                         <Globe className="h-4 w-4 text-green-400" />
                       </TooltipTrigger>
-                      <TooltipContent className="bg-black border-green-500/30">
+                      <TooltipContent className="bg-black text-white border-green-500/30">
                         <p>Choose the server location for your proxy request</p>
                       </TooltipContent>
                     </Tooltip>
