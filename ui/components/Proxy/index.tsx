@@ -58,7 +58,7 @@ export default function ProxyTester() {
         requestOptions.body = body;
       }
       
-      const res: any = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`, requestOptions);
+      const res: any = await fetch(`https://specter-gamma.vercel.app/api/proxy?url=${encodeURIComponent(url)}`, requestOptions);
       const xForwardedForIP = res.headers.get('X-Forwarded-For');
       setXForwardedFor(xForwardedForIP)
       console.log("hujswuxhuijx",xForwardedForIP);
