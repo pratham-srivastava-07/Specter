@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
     // ---- HTTPS via CONNECT ---- //
     if (isHttps) {
       return await new Promise<Response>((resolve) => {
-        const proxySocket = net.connect(1080, "127.0.0.1", () => {
+        const proxySocket = net.connect(36977, "shinkansen.proxy.rlwy.net", () => {
           const connectRequest =
             `CONNECT ${hostname}:${port} HTTP/1.1\r\n` +
             `Host: ${hostname}:${port}\r\n` +
@@ -155,8 +155,8 @@ export async function GET(req: NextRequest) {
     return await new Promise<Response>((resolve) => {
       const proxyRequest = http.request(
         {
-          hostname: "127.0.0.1",
-          port: 1080,
+          hostname: "shinkansen.proxy.rlwy.net",
+          port: 36977,
           method: "GET",
           path: targetUrl.toString(),
           headers: {
