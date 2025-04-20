@@ -58,31 +58,6 @@ block_domains = ["blocked-domain.com"]
 block_paths = ["/admin", "/internal"]
 ```
 
-## 🔧 Advanced Usage
-
-### Custom Headers
-
-Add or modify headers for all proxied requests:
-
-```toml
-[headers]
-add = [
-  { name = "X-Custom-Header", value = "CustomValue" },
-  { name = "User-Agent", value = "RustProxy/1.0" }
-]
-```
-
-### Authentication
-
-Configure authentication for clients:
-
-```toml
-[auth]
-type = "basic"  # Options: "basic", "bearer", "none"
-username = "admin"
-password = "secure_password"
-```
-
 ### Access Control
 
 Restrict access based on IP addresses:
