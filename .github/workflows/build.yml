@@ -1,0 +1,48 @@
+name: Build Succeeds on PR or Push
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - master
+  pull_request:
+    branches:
+      - main
+      - dev
+      - master
+
+jobs:
+  rust-backend:
+    name: Build Rust Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Build Rust Project
+        run: cargo build --release
+
+  nextjs-frontend:
+    name: Build Next.js Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./ui
+
+      - name: Build Frontend
+        run: npm run build
+        working-directory: ./ui
